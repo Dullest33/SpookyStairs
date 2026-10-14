@@ -1,6 +1,7 @@
 --!strict
 -- Studio-only test commands. They are never created on live servers.
 -- /candy  -> grants Config.Debug.TestCandyAmount candy through RewardService.
+-- /skip   -> opens the current door from anywhere (fast way to test many floors).
 -- Works with both chat systems; the typed text is only compared to the command, never shown or stored.
 
 local Players = game:GetService("Players")
@@ -11,6 +12,7 @@ local TextChatService = game:GetService("TextChatService")
 local Config = require(ReplicatedStorage.Shared.Config)
 local DataService = require(script.Parent.DataService)
 local RewardService = require(script.Parent.RewardService)
+local RunManager = require(script.Parent.RunManager)
 
 type CommandHandler = (player: Player) -> ()
 
@@ -18,7 +20,7 @@ local DevCommands = {}
 
 local commands: { [string]: CommandHandler } = {}
 
-local function run(alias: string, player: Player)
+local function runCommand(alias: string, player: Player)
 	local handler = commands[alias]
 	if not handler then
 		return
@@ -36,7 +38,7 @@ local function listenTextChat()
 		command.Triggered:Connect(function(source: TextSource, _text: string)
 			local player = Players:GetPlayerByUserId(source.UserId)
 			if player then
-				run(alias, player)
+				runCommand(alias, player)
 			end
 		end)
 		command.Parent = TextChatService
@@ -47,7 +49,7 @@ end
 local function listenLegacyChat()
 	local function watch(player: Player)
 		player.Chatted:Connect(function(message: string)
-			run(string.lower(message), player)
+			runCommand(string.lower(message), player)
 		end)
 	end
 	Players.PlayerAdded:Connect(watch)
@@ -80,13 +82,22 @@ function DevCommands:Start()
 		end
 	end
 
+	commands["/skip"] = function(player)
+		if RunManager:DebugAdvance(player) then
+			local run = RunManager:GetRun(player)
+			print(string.format("[DevCommands] %s skipped to floor %d", player.Name, run and run.floor or -1))
+		else
+			warn("[DevCommands] /skip ignored: no run, door already opening, or last floor")
+		end
+	end
+
 	local chatVersion = TextChatService.ChatVersion
 	if chatVersion == Enum.ChatVersion.TextChatService then
 		listenTextChat()
 	else
 		listenLegacyChat()
 	end
-	print(string.format("[DevCommands] ready - type /candy in chat (chat: %s)", chatVersion.Name))
+	print(string.format("[DevCommands] ready - type /candy or /skip in chat (chat: %s)", chatVersion.Name))
 end
 
 return DevCommands

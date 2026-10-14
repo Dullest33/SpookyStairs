@@ -6,8 +6,13 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Types = require(ReplicatedStorage.Shared.Types)
 
--- Controllers are added here as their milestones land (HUDController and FeedbackController in M3, ...).
-local controllers: { Types.Service } = {}
+local Controllers = script.Controllers
+
+-- Controllers are added here as their milestones land.
+local controllers: { Types.Service } = {
+	require(Controllers.InteractController),
+	require(Controllers.HUDController),
+}
 
 for _, controller in controllers do
 	controller:Init()

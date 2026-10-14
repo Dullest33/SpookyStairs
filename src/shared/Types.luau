@@ -1,6 +1,9 @@
 --!strict
 -- Shared type definitions. Every module takes its types from here.
 
+local SeededRandom = require(script.Parent.Util.SeededRandom)
+local Trove = require(script.Parent.Util.Trove)
+
 export type CardEntry = {
 	normal: boolean,
 	golden: boolean,
@@ -44,6 +47,63 @@ export type PlayerView = {
 	candy: number,
 	battery: number,
 	partyIds: { number },
+}
+
+-- Per-template data that is not part of the Studio model (shared/RoomDefs.luau).
+export type RoomDef = {
+	weight: number,
+}
+
+-- A room template read from ServerStorage.RoomTemplates, with its geometry measured from the Entrance.
+export type RoomTemplate = {
+	templateId: string,
+	model: Model,
+	minFloor: number,
+	maxFloor: number,
+	weight: number,
+	entranceToExit: CFrame,
+	entranceToBox: CFrame,
+	boxSize: Vector3,
+}
+
+-- World-space axis-aligned box, already shrunk by Config.Floors.OverlapTolerance.
+export type Box = {
+	min: Vector3,
+	max: Vector3,
+}
+
+-- The generator's memory for one run: where the next room goes and what came before.
+export type Layout = {
+	rng: SeededRandom.SeededRandom,
+	origin: CFrame,
+	nextAnchor: CFrame,
+	lastTemplateId: string?,
+	recentBoxes: { Box },
+}
+
+export type DoorState = "closed" | "opening" | "open"
+
+export type Room = {
+	floor: number,
+	templateId: string,
+	model: Model,
+	entrance: BasePart,
+	exit: BasePart,
+	door: Model,
+	doorState: DoorState,
+	sealed: boolean,
+	trove: Trove.Trove,
+}
+
+export type Run = {
+	player: Player,
+	floor: number,
+	hearts: number,
+	slot: number,
+	layout: Layout,
+	rooms: { [number]: Room },
+	folder: Folder,
+	trove: Trove.Trove,
 }
 
 export type RewardKind = "candy" | "card" | "golden" | "badge"

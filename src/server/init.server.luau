@@ -15,6 +15,8 @@ local services: { Types.Service } = {
 	require(Services.DataService),
 	require(Services.RemoteGuard),
 	require(Services.RewardService),
+	require(Services.FloorGenerator),
+	require(Services.RunManager),
 	require(Services.DevCommands),
 }
 

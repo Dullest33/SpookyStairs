@@ -18,15 +18,15 @@ local Config = require(ReplicatedStorage.Shared.Config)
 
 local DOOR = Config.Floors.DoorSize
 local WALL = Config.Floors.WallThickness
-local HEIGHT = 14
+local HEIGHT = 20
 
-local STRAIGHT_WIDTH = 16
-local STRAIGHT_LENGTH = 40
+local STRAIGHT_WIDTH = 24
+local STRAIGHT_LENGTH = 60
 
-local L_SIZE = 28 -- the L rooms are a 28 x 28 square with the L cut out of it
-local L_CORRIDOR_HALF = 6 -- the entrance corridor is 12 studs wide
-local L_TURN_DEPTH = 16 -- where the turn corridor starts (studs from the entrance)
-local L_EXIT_Z = -22 -- exit doorway centre along the side wall
+local L_SIZE = 40 -- the L rooms are a 40 x 40 square with the L cut out of it
+local L_CORRIDOR_HALF = 9 -- the entrance corridor is 18 studs wide
+local L_TURN_DEPTH = 22 -- where the turn corridor starts (studs from the entrance)
+local L_EXIT_Z = -31 -- exit doorway centre along the side wall
 
 local COLORS = {
 	Floor = Color3.fromRGB(96, 66, 52),
@@ -138,7 +138,7 @@ local function lamp(parent: Instance, position: Vector3)
 	part.CanCollide = false
 	local light = Instance.new("PointLight")
 	light.Color = COLORS.Lamp
-	light.Range = 24
+	light.Range = 32
 	light.Brightness = 1.2
 	light.Parent = part
 end
@@ -174,15 +174,16 @@ local function buildStraightHall(parent: Instance)
 	wallAlongZ(geo, "WallRight", 0, -l, w - WALL, w)
 	wallAlongX(geo, "WallBack", -w + WALL, w - WALL, 0, -WALL, 0)
 	wallAlongX(geo, "WallFront", -w + WALL, w - WALL, -l + WALL, -l, 0)
-	lamp(geo, Vector3.new(0, HEIGHT - 0.5, -l * 0.3))
-	lamp(geo, Vector3.new(0, HEIGHT - 0.5, -l * 0.7))
+	lamp(geo, Vector3.new(0, HEIGHT - 0.5, -l * 0.2))
+	lamp(geo, Vector3.new(0, HEIGHT - 0.5, -l * 0.5))
+	lamp(geo, Vector3.new(0, HEIGHT - 0.5, -l * 0.8))
 
-	for index, z in { -8, -14, -20, -26, -32 } do
-		socket(sockets, "Candy", Vector3.new(if index % 2 == 0 then 4 else -4, 2, z))
+	for index, z in { -10, -20, -30, -40, -50 } do
+		socket(sockets, "Candy", Vector3.new(if index % 2 == 0 then 6 else -6, 2, z))
 	end
-	socket(sockets, "Hide", Vector3.new(-w + 2.5, 0.5, -18))
-	socket(sockets, "Hide", Vector3.new(w - 2.5, 0.5, -28))
-	socket(sockets, "MonsterSpawn", Vector3.new(0, 0.5, -20))
+	socket(sockets, "Hide", Vector3.new(-w + 2.5, 0.5, -26))
+	socket(sockets, "Hide", Vector3.new(w - 2.5, 0.5, -42))
+	socket(sockets, "MonsterSpawn", Vector3.new(0, 0.5, -30))
 
 	finish(model, CFrame.new(0, 0, -l), parent)
 end
@@ -217,14 +218,14 @@ local function buildLHall(parent: Instance, templateId: string, side: number)
 	-- Solid fillers that cut the square into an L.
 	block(geo, "FillerInner", v(L_CORRIDOR_HALF, 0, -WALL), v(h - WALL, HEIGHT, -L_TURN_DEPTH), COLORS.Filler)
 	block(geo, "FillerOuter", v(-h + WALL, 0, -WALL), v(-L_CORRIDOR_HALF, HEIGHT, -s + WALL), COLORS.Filler)
-	lamp(geo, v(0, HEIGHT - 0.5, -10))
-	lamp(geo, v(4, HEIGHT - 0.5, L_EXIT_Z))
+	lamp(geo, v(0, HEIGHT - 0.5, -12))
+	lamp(geo, v(8, HEIGHT - 0.5, L_EXIT_Z))
 
-	socket(sockets, "Candy", v(0, 2, -6))
-	socket(sockets, "Candy", v(0, 2, -13))
-	socket(sockets, "Candy", v(2, 2, L_EXIT_Z))
-	socket(sockets, "Candy", v(9, 2, L_EXIT_Z))
-	socket(sockets, "Hide", v(-L_CORRIDOR_HALF + 2.5, 0.5, -24))
+	socket(sockets, "Candy", v(0, 2, -8))
+	socket(sockets, "Candy", v(0, 2, -18))
+	socket(sockets, "Candy", v(4, 2, L_EXIT_Z))
+	socket(sockets, "Candy", v(14, 2, L_EXIT_Z))
+	socket(sockets, "Hide", v(-L_CORRIDOR_HALF + 2.5, 0.5, -34))
 	socket(sockets, "MonsterSpawn", v(0, 0.5, L_EXIT_Z))
 
 	local exitPosition = v(h, 0, L_EXIT_Z)

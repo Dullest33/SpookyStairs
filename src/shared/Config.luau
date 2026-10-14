@@ -73,7 +73,7 @@ local Config = {
 		MaxSeed = 2147483646,
 		-- Template walls are this thick and sit inside the room's bounds (see tools/BuildGreyboxRooms.luau).
 		WallThickness = 1,
-		DoorSize = Vector3.new(6, 10, 1),
+		DoorSize = Vector3.new(8, 12, 1),
 		DoorOpenSeconds = 0.4,
 		-- Prompt range is a bit shorter than the server check (Distances.OpenDoor) to allow for lag.
 		DoorPromptDistance = 8,

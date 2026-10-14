@@ -4,7 +4,7 @@ Claude Code ticks a milestone and adds notes after `/build-milestone`. You tick 
 
 | # | Milestone | Built | Playtested | Notes |
 |---|---|---|---|---|
-| M1 | Skeleton + DataService + RemoteGuard | [ ] | [ ] | |
+| M1 | Skeleton + DataService + RemoteGuard | [x] | [ ] | 2026-10-14. Config/Types/Remotes, Signal/Trove/SeededRandom, DataService (session lock, retries, autosave, BindToClose), RemoteGuard (token bucket + Check helpers), minimal RewardService.GrantCandy, Studio-only `/candy` test command (DevCommands.luau, not in plan tree). No client controllers yet. |
 | M2 | Endless floors (solo, greybox rooms) | [ ] | [ ] | |
 | M3 | Candy + HUD + basic feedback | [ ] | [ ] | |
 | M4 | Sock Goblin, Giggle Ghost, hiding, hearts, Safe Suite 10 | [ ] | [ ] | |
@@ -25,5 +25,7 @@ Claude Code ticks a milestone and adds notes after `/build-milestone`. You tick 
 - [ ] Sounds + card images
 
 ## Open issues
+- `.claude/` kit folder (skills `/build-milestone`, `/playtest`, lint hook, reviewer agent) mentioned in README is not in the repo; M1 was linted by hand. Copy it in from the starter kit.
+- No Luau type checker (luau-lsp) installed, so `--!strict` errors only show in Studio's Script Analysis. Check it after syncing.
 
 ## Ideas for later

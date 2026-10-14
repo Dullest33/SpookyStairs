@@ -280,7 +280,8 @@ function DataService:Init()
 		store = result
 	else
 		warn(
-			"[DataService] DataStores unavailable (in Studio: enable 'Studio Access to API Services'): "
+			"[DataService] DataStores unavailable (in Studio: publish the place, then enable "
+				.. "Game Settings > Security > 'Studio Access to API Services'): "
 				.. tostring(result)
 		)
 	end

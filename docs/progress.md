@@ -4,7 +4,7 @@ Claude Code ticks a milestone and adds notes after `/build-milestone`. You tick 
 
 | # | Milestone | Built | Playtested | Notes |
 |---|---|---|---|---|
-| M1 | Skeleton + DataService + RemoteGuard | [x] | [ ] | 2026-10-14. Config/Types/Remotes, Signal/Trove/SeededRandom, DataService (session lock, retries, autosave, BindToClose), RemoteGuard (token bucket + Check helpers), minimal RewardService.GrantCandy, Studio-only `/candy` test command (DevCommands.luau, not in plan tree). No client controllers yet. |
+| M1 | Skeleton + DataService + RemoteGuard | [x] | [x] | 2026-10-14. Config/Types/Remotes, Signal/Trove/SeededRandom, DataService (session lock, retries, autosave, BindToClose), RemoteGuard (token bucket + Check helpers), minimal RewardService.GrantCandy, Studio-only `/candy` test command (DevCommands.luau, not in plan tree). No client controllers yet. |
 | M2 | Endless floors (solo, greybox rooms) | [ ] | [ ] | |
 | M3 | Candy + HUD + basic feedback | [ ] | [ ] | |
 | M4 | Sock Goblin, Giggle Ghost, hiding, hearts, Safe Suite 10 | [ ] | [ ] | |
